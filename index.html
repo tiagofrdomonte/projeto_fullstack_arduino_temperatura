@@ -1,0 +1,60 @@
+
+  <!DOCTYPE HTML>
+  <html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <title>Projeto Fullstack</title>
+    <style>
+      body { font-family: Arial, sans-serif; background-color: #ececff;}
+      h1 { text-align: center; color: #333; color: #0f07fe;}
+      p { text-align: center; font-size: 20px; }
+      .data { color: #ff6347; font-weight: bold; }
+      #releStatus { font-size: 22px; }
+      .card {
+        width: 300px;
+        height: 70px;
+        border: 1px solid #ffffff;
+        border-radius: 8px;
+        background-color: #ffffff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+      .container {
+        display: flex;
+        flex-wrap: wrap; /* Permite quebrar linha caso necessário */
+        gap: 16px;       /* Espaçamento entre os cards */
+        justify-content: center; /* Centraliza os cards dentro do contêiner */
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Controlador de Temperatura</h1>
+    <div class="container">
+      <div class="card">
+        <p>Temperatura Atual: <span id="tempAtual" class="data">loading...</span> &deg;C</p>
+      </div> 
+      <div class="card">
+        <p>Set Point: <span id="setPoint" class="data">loading...</span> &deg;C</p>
+      </div>
+      <div class="card">
+        <p>Histerese: <span id="histerese" class="data">loading...</span> &deg;C</p>
+      </div>
+      <div class="card">
+        <p>Sa&iacute;da do Rel&eacute;: <span id="releStatus">loading...</span></p>
+      </div>
+    </div>
+    <script>
+      function updateData() {
+        fetch('/data')
+          .then(response => response.json())
+          .then(data => {
+            document.getElementById('tempAtual').textContent = data.tempAtual;
+            document.getElementById('setPoint').textContent = data.setPoint;
+            document.getElementById('histerese').textContent = data.histerese;
+            document.getElementById('releStatus').textContent = data.releStatus;
+          });
+      }
+      setInterval(updateData, 1000);
+    </script>
+  </body>
+</html>
